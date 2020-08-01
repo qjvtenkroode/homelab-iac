@@ -2,57 +2,55 @@
 # Description: Traefik as frontend proxy
 
 job "traefik" {
-  datacenters = ["homelab"]
-  type = "service"
+    datacenters = ["homelab"]
+    type = "service"
 
-  group "traefik" {
-    count = 1
+    group "traefik" {
+        count = 1
 
-    task "traefik" {
-      driver = "docker"
+        task "traefik" {
+            driver = "docker"
 
-      config {
-        image = "traefik:v2.2"
-	network_mode = "host"
+            config {
+                image = "traefik:v2.2"
+                network_mode = "host"
+                volumes = [
+                    "local/traefik.toml:/etc/traefik/traefik.toml",
+                ]
+            }
 
-	volumes = [
-	  "local/traefik.toml:/etc/traefik/traefik.toml",
-	]
-      }
-
-      template {
-        data = <<EOF
+            template {
+                data = <<EOF
 [entryPoints]
-  [entryPoints.http]
-  address = ":8080"
-  [entryPoints.traefik]
-  address = ":8081"
+    [entryPoints.http]
+    address = ":8080"
+    [entryPoints.traefik]
+    address = ":8081"
 
 [api]
-  dashboard = true
-  insecure = true
+    dashboard = true
+    insecure = true
 EOF
 
-        destination = "local/traefik.toml"
-      }
+                destination = "local/traefik.toml"
+            }
 
-      resources {
-        cpu = 100
-	memory = 128
+            resources {
+                cpu = 100
+                memory = 128
 
-	network {
-	  mbits = 10
+                network {
+                    mbits = 10
 
-	  port "http" {
-	    static = 8080
-	  }
+                    port "http" {
+                        static = 8080
+                    }
 
-	  port "api" {
-	    static = 8081
-	  }
-	}
-      }
-
+                    port "api" {
+                        static = 8081
+                    }
+                }
+            }
+        }
     }
-  }
 }
