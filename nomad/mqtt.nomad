@@ -12,7 +12,7 @@ job "mqtt" {
             driver = "docker"
 
             config {
-                image ="eclipse-mosquitto:latest"
+                image = "eclipse-mosquitto:latest"
                 #volumes = [
                 #    "local/mosquitto.conf:/mosquitto/config/mosquitto.conf"
                 #]
