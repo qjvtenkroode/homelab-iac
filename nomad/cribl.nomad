@@ -28,6 +28,17 @@ job "cribl" {
                     }
                 }
             }
+
+            service {
+                name = "cribl"
+                port = "criblui"
+
+                check {
+                    type = "tcp"
+                    interval = "10s"
+                    timeout = "2s"
+                }
+            }
         }
     }
 }

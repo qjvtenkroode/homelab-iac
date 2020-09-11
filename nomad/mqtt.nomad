@@ -30,6 +30,17 @@ job "mqtt" {
                     }
                 }
             }
+
+            service {
+                name = "mqtt"
+                port = "mqtt"
+
+                check {
+                    type = "tcp"
+                    interval = "10s"
+                    timeout = "2s"
+                }
+            }
         }
     }
 }
