@@ -24,7 +24,6 @@ job "traefik" {
                     "--api.insecure=true",
                     "--entrypoints.web.address=:80",
                     "--entrypoints.websecure.address=:443",
-                    "--entrypoints.api.address=:8080",
                     "--providers.consulcatalog",
                     "--providers.consulcatalog.endpoint.address=consul.service.consul:8500",
                     "--providers.consulcatalog.endpoint.datacenter=homelab",
