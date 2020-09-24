@@ -27,7 +27,11 @@ job "traefik" {
                     "--providers.consulcatalog",
                     "--providers.consulcatalog.endpoint.address=consul.service.consul:8500",
                     "--providers.consulcatalog.endpoint.datacenter=homelab",
-                    "--providers.consulcatalog.exposedByDefault=false"
+                    "--providers.consulcatalog.exposedByDefault=false",
+                    "--certificatesresolvers.letsencrypt.acme.email=qjv.tenkroode@gmail.com",
+                    "--certificatesresolvers.letsencrypt.acme.storage=acme.json",
+                    "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=digitalocean",
+                    "--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=0"
                 ]
             }
 
