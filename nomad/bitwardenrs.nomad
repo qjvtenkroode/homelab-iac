@@ -28,7 +28,14 @@ job "bitwardenrs" {
 
                 port_map {
                     http = 80
+                    websocket = 3012
                 }
+            }
+
+            env {
+                DOMAIN = "https://warden.qkroode.nl"
+                SIGNUPS_ALLOWED = false
+                WEBSOCKET_ENABLED = true
             }
 
             resources {
@@ -36,15 +43,25 @@ job "bitwardenrs" {
                 memory = 64
 
                 network {
-                    port "http" {
-                        static = 8000
-                    }
+                    port "http" { }
+
+                    port "websocket" { }
                 }
             }
 
             service {
                 name = "bitwardenrs"
                 port = "http"
+                tags = [
+                    "traefik.enable=true",
+                    "traefik.frontend.entryPoints=http,https",
+                    "traefik.http.routers.bitwarden-ui.rule=Host(`warden.qkroode.nl`)",
+                    "traefik.http.routers.bitwarden-ui.service=bitwarden-ui",
+                    "traefik.http.services.bitwarden-ui.loadbalancer.server.port=${NOMAD_HOST_PORT_http}",
+                    "traefik.http.routers.bitwarden-websocket.rule=Host(`warden.qkroode.nl`) && Path(`/notifications/hub`)",
+                    "traefik.http.routers.bitwarden-websocket.service=bitwarden-websocket",
+                    "traefik.http.services.bitwarden-websocket.loadbalancer.server.port=${NOMAD_HOST_PORT_websocket}"
+                ]
 
                 check {
                     type = "tcp"
