@@ -24,7 +24,7 @@ job "bitwardenrs" {
             }
 
             config {
-                image = "bitwardenrs/server:latest"
+                image = "bitwardenrs/server:1.16.3"
 
                 port_map {
                     http = 80
