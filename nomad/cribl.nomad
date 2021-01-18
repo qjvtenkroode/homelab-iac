@@ -12,8 +12,7 @@ job "cribl" {
             driver = "docker"
 
             config {
-                image = "cribl/cribl"
-
+                image = "registry.service.consul:5000/homelab/cribl:2.3.3"
             }
 
             resources {
@@ -25,6 +24,10 @@ job "cribl" {
 
                     port "criblui" {
                         static = 9000
+                    }
+
+                    port "pfsense" {
+                        static = 2300
                     }
                 }
             }

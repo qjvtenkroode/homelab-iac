@@ -12,7 +12,7 @@ job "qkroode.nl" {
             driver = "docker"
 
             config {
-                image = "registry.service.consul:5000/homelab/qkroode.nl:v1.0"
+                image = "registry.service.consul:5000/homelab/qkroode.nl:0.79.0-e0e69fe"
 
                 port_map {
                     http = 80

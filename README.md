@@ -13,3 +13,4 @@ Nomad tasks
 | Jenkins                   | No                 | No    | TODO     | Custom image needed, configuration non-existent yet. |
 | MQTT                      | No                 | Yes   | TODO     | Custom image needed.                                 |
 | qkroode.nl                | Yes                | Yes   | TODO     | Setup logging towards Cribl and then Splunk.         |
+| Vault                     | No                 | No    | TODO     | Custom image needed just for versioning.             |
