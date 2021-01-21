@@ -29,6 +29,10 @@ job "cribl" {
                     port "pfsense" {
                         static = 2300
                     }
+
+                    port "docker_hec" {
+                        static = 2400
+                    }
                 }
             }
 

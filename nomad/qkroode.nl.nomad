@@ -17,6 +17,14 @@ job "qkroode.nl" {
                 port_map {
                     http = 80
                 }
+
+                logging {
+                    type = "splunk"
+                    config {
+                        splunk-token = "72584d49-5377-3544-4374-4c3674797950"
+                        splunk-url = "cribl.service.consul:2400"
+                    }
+                }
             }
 
             resources {
