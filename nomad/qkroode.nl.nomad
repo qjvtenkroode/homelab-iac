@@ -21,8 +21,9 @@ job "qkroode.nl" {
                 logging {
                     type = "splunk"
                     config {
-                        splunk-token = "72584d49-5377-3544-4374-4c3674797950"
+                        splunk-token = "${TOKEN}"
                         splunk-url = "cribl.service.consul:2400"
+                        splunk-format = "json"
                     }
                 }
             }
@@ -61,6 +62,21 @@ job "qkroode.nl" {
                     interval = "10s"
                     timeout = "2s"
                 }
+            }
+
+            template {
+                change_mode = "restart"
+                destination = "local/values.env"
+                env = true
+
+                data = <<EOF
+{{ with secret "secret/cribl/docker_hec" }}
+TOKEN = "{{ .Data.token }}"{{ end }}
+EOF
+            }
+
+            vault {
+                policies = ["homelab"]
             }
         }
     }

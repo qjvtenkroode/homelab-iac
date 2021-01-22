@@ -11,6 +11,10 @@ job "traefik" {
         task "traefik" {
             driver = "docker"
 
+            env {
+                DO_AUTH_TOKEN = "${TOKEN}"
+            }
+
             config {
                 image = "traefik:v2.3"
 
@@ -69,6 +73,21 @@ job "traefik" {
                     interval = "10s"
                     timeout = "2s"
                 }
+            }
+
+            template {
+                change_mode = "restart"
+                destination = "local/values.env"
+                env = true
+
+                data = <<EOF
+{{ with secret "secret/letsencrypt/digitalocean" }}
+TOKEN = "{{ .Data.token }}"{{ end }}
+EOF
+            }
+
+            vault {
+                policies = ["homelab"]
             }
         }
     }

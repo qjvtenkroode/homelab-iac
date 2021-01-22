@@ -18,3 +18,10 @@ client {
     read_only = false
   }
 }
+
+vault {
+  address = "http://dominion.qkroode.nl:8200"
+  create_from_role = "nomad-cluster"
+  enabled = true
+  token = ""
+}
