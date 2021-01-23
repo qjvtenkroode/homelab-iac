@@ -22,7 +22,7 @@ job "qkroode.nl" {
                     type = "splunk"
                     config {
                         splunk-token = "${TOKEN}"
-                        splunk-url = "cribl.service.consul:2400"
+                        splunk-url = "http://cribl.service.consul:2400"
                         splunk-format = "json"
                     }
                 }
