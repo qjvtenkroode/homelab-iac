@@ -56,6 +56,12 @@ EOF
             service {
                 name = "registry"
                 port = "registry"
+
+                check {
+                    type = "tcp"
+                    interval = "10s"
+                    timeout = "2s"
+                }
             }
         }
     }
