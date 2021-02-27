@@ -30,8 +30,17 @@ job "bitwardenrs" {
                     http = 80
                     websocket = 3012
                 }
-            }
 
+                logging {
+                    type = "splunk"
+                    config {
+                        splunk-token = "${TOKEN}"
+                        splunk-url = "http://cribl.service.consul:2400"
+                        splunk-format = "json"
+                    }
+                }
+            }
+ 
             env {
                 DOMAIN = "https://warden.qkroode.nl"
                 SIGNUPS_ALLOWED = false
@@ -47,6 +56,20 @@ job "bitwardenrs" {
 
                     port "websocket" { }
                 }
+            }
+            template {
+                change_mode = "restart"
+                destination = "local/values.env"
+                env = true
+
+                data = <<EOF
+{{ with secret "secret/cribl/docker_hec" }}
+TOKEN = "{{ .Data.token }}"{{ end }}
+EOF
+            }
+
+            vault {
+                policies = ["homelab"]
             }
 
             service {

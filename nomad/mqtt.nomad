@@ -10,12 +10,17 @@ job "mqtt" {
 
         task "mosquitto" {
             driver = "docker"
-
             config {
                 image = "eclipse-mosquitto:latest"
-                #volumes = [
-                #    "local/mosquitto.conf:/mosquitto/config/mosquitto.conf"
-                #]
+
+                logging {
+                    type = "splunk"
+                    config {
+                        splunk-token = "${TOKEN}"
+                        splunk-url = "http://cribl.service.consul:2400"
+                        splunk-format = "json"
+                    }
+                }
             }
 
             resources {
@@ -31,6 +36,21 @@ job "mqtt" {
                 }
             }
 
+            template {
+                change_mode = "restart"
+                destination = "local/values.env"
+                env = true
+
+                data = <<EOF
+{{ with secret "secret/cribl/docker_hec" }}
+TOKEN = "{{ .Data.token }}"{{ end }}
+EOF
+            }
+
+            vault {
+                policies = ["homelab"]
+            }
+ 
             service {
                 name = "mqtt"
                 port = "mqtt"

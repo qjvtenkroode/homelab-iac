@@ -13,6 +13,9 @@ plan-cribl: ## Run a nomad plan for Cribl
 plan-qkroode_nl: ## Run a nomad plan for qkroode.nl
 	nomad job plan nomad/qkroode.nl.nomad
 
+plan-registry: ## Run a nomad plan for registry
+	nomad job plan nomad/registry.nomad
+
 deploy: ## Deploys all jobs to the Nomad cluster
 	deploy-cribl
 	deploy-qkroode_nl
@@ -22,3 +25,6 @@ deploy-cribl: ## Deploy a Cribl job to the Nomad cluster
 
 deploy-qkroode_nl: ## Deploy a qkroode.nl job to the Nomad cluster
 	nomad job plan nomad/qkroode.nl.nomad
+
+deploy-registry: ## Deploy a Registry job to the Nomad cluster
+	nomad job run nomad/registry.nomad

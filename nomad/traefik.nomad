@@ -12,7 +12,7 @@ job "traefik" {
             driver = "docker"
 
             env {
-                DO_AUTH_TOKEN = "${TOKEN}"
+                DO_AUTH_TOKEN = "${DOTOKEN}"
             }
 
             config {
@@ -24,6 +24,15 @@ job "traefik" {
                     https = 443
                 }
 
+                logging {
+                    type = "splunk"
+                    config {
+                        splunk-token = "${TOKEN}"
+                        splunk-url = "http://cribl.service.consul:2400"
+                        splunk-format = "json"
+                    }
+                }
+ 
                 args = [
                     "--api.insecure=true",
                     "--entrypoints.web.address=:80",
@@ -82,6 +91,9 @@ job "traefik" {
 
                 data = <<EOF
 {{ with secret "secret/letsencrypt/digitalocean" }}
+DOTOKEN = "{{ .Data.token }}"{{ end }}
+
+{{ with secret "secret/cribl/docker_hec" }}
 TOKEN = "{{ .Data.token }}"{{ end }}
 EOF
             }
