@@ -52,6 +52,11 @@ EOF
             vault {
                 policies = ["homelab"]
             }
+
+            service {
+                name = "registry"
+                port = "registry"
+            }
         }
     }
 }
