@@ -11,10 +11,6 @@ job "traefik" {
         task "traefik" {
             driver = "docker"
 
-            env {
-                DO_AUTH_TOKEN = "${DOTOKEN}"
-            }
-
             config {
                 image = "traefik:v2.3"
 
@@ -50,9 +46,7 @@ job "traefik" {
 
             resources {
                 cpu = 500
-                memory = 512
-
-                network {
+                memory = 512 network {
                     mbits = 10
 
                     port "http" {
@@ -91,7 +85,7 @@ job "traefik" {
 
                 data = <<EOF
 {{ with secret "secret/letsencrypt/digitalocean" }}
-DOTOKEN = "{{ .Data.token }}"{{ end }}
+DO_AUTH_TOKEN = "{{ .Data.token }}"{{ end }}
 
 {{ with secret "secret/cribl/docker_hec" }}
 TOKEN = "{{ .Data.token }}"{{ end }}
