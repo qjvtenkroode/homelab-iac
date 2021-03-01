@@ -25,7 +25,8 @@ job "traefik" {
                     config {
                         splunk-token = "${TOKEN}"
                         splunk-url = "http://cribl.service.consul:2400"
-                        splunk-format = "json"
+                        splunk-format = "json",
+                        splunk-source = "${NOMAD_TASK_NAME}"
                     }
                 }
  
