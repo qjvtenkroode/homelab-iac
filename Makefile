@@ -1,15 +1,10 @@
-.PHONY: help deploy plan
+.PHONY: help deploy* plan*
 
 help: ## This message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-plan: ## Run a nomad plan for all jobs
-	plan-registry
-	plan-cribl
-	plan-traefik
-	plan-mqtt
-	plan-bitwardenrs
-	plan-qkroode_nl
+## Run a nomad plan for all jobs
+plan: plan-registry plan-cribl plan-traefik plan-mqtt plan-bitwardenrs plan-traefik
 	
 plan-bitwardenrs: ## Run a nomad plan for Bitwardenrs
 	nomad job plan nomad/bitwardenrs.nomad
@@ -29,13 +24,8 @@ plan-registry: ## Run a nomad plan for registry
 plan-traefik: ## Run a nomad plan for traefik
 	nomad job plan nomad/traefik.nomad
 
-
-deploy: ## Deploys all jobs, except the custom docker registry, to the Nomad cluster
-	deploy-cribl
-	deploy-traefik
-	deploy-mqtt
-	deploy-bitwardenrs
-	deploy-qkroode_nl
+## Deploys all jobs, except the custom docker registry, to the Nomad cluster
+deploy: deploy-cribl deploy-traefik deploy-mqtt deploy-bitwardenrs deploy-qkroode_nl
 
 deploy-bitwardenrs: ## Deploy a bitwardenrs job to the Nomad cluster
 	nomad job run nomad/bitwardenrs.nomad
