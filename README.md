@@ -14,5 +14,4 @@ Nomad tasks
 | qkroode.nl                | Yes                | Yes   | Yes     | Setup logging towards Cribl and then Splunk.         |
 
 ## TODO
- - Registry depends on Cribl ... fails with a clean environment.
  - MQTT service check Consul fails somehow.

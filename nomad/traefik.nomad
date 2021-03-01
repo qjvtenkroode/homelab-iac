@@ -15,9 +15,10 @@ job "traefik" {
                 image = "traefik:v2.3"
 
                 port_map {
-                    ui = 8080
                     http = 80
                     https = 443
+                    prometheus = 8082
+                    ui = 8080
                 }
 
                 logging {
@@ -31,17 +32,20 @@ job "traefik" {
                 }
  
                 args = [
+                    "--accesslog=true",
                     "--api.insecure=true",
-                    "--entrypoints.web.address=:80",
-                    "--entrypoints.websecure.address=:443",
+                    "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=digitalocean",
+                    "--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=0",
+                    "--certificatesresolvers.letsencrypt.acme.email=qjv.tenkroode@gmail.com",
+                    "--certificatesresolvers.letsencrypt.acme.storage=acme.json",
+                    "--entryPoints.metrics.address=:8082",
+                    "--entryPoints.web.address=:80",
+                    "--entryPoints.websecure.address=:443",
+                    "--metrics.prometheus.entryPoint=metrics",
                     "--providers.consulcatalog",
                     "--providers.consulcatalog.endpoint.address=consul.service.consul:8500",
                     "--providers.consulcatalog.endpoint.datacenter=homelab",
-                    "--providers.consulcatalog.exposedByDefault=false",
-                    "--certificatesresolvers.letsencrypt.acme.email=qjv.tenkroode@gmail.com",
-                    "--certificatesresolvers.letsencrypt.acme.storage=acme.json",
-                    "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=digitalocean",
-                    "--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=0"
+                    "--providers.consulcatalog.exposedByDefault=false"
                 ]
             }
 
@@ -56,6 +60,10 @@ job "traefik" {
 
                     port "https" {
                         static = 443
+                    }
+
+                    port "prometheus" {
+                        static = 8082
                     }
 
                     port "ui" {
