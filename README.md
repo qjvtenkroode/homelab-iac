@@ -16,4 +16,3 @@ Nomad tasks
 ## TODO
  - Registry depends on Cribl ... fails with a clean environment.
  - MQTT service check Consul fails somehow.
- - Traefik fails to get certs with Letsencrypt somehow.
