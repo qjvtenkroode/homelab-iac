@@ -19,6 +19,7 @@ job "registry" {
                 config {
                     splunk-token = "${TOKEN}"
                     splunk-url = "http://cribl.service.consul:2400"
+                    splunk-verify-connection = "false",
                     splunk-format = "json",
                     splunk-source = "${NOMAD_TASK_NAME}"
                 }
