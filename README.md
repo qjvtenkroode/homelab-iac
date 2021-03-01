@@ -1,6 +1,6 @@
 # Infrastructure-as-Code for my homelab
 
-## TODO
+## Status
 Nomad tasks
 | Taskfile                  | Custom Dockerfile? | Ready | Logging? | Notes                                                |
 | ------------------------- | :----------------: | :---: | :------: | ---------------------------------------------------: |
@@ -12,3 +12,8 @@ Nomad tasks
 | BitWardenRS               | No                 | Yes   | Yes     | Not sure about custom image.                         |
 | MQTT                      | No                 | Yes   | Yes     | Custom image needed.                                 |
 | qkroode.nl                | Yes                | Yes   | Yes     | Setup logging towards Cribl and then Splunk.         |
+
+## TODO
+ - Registry depends on Cribl ... fails with a clean environment.
+ - MQTT service check Consul fails somehow.
+ - Traefik fails to get certs with Letsencrypt somehow.
