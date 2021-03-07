@@ -39,6 +39,7 @@ job "traefik" {
                     "--certificatesresolvers.letsencrypt.acme.email=qjv.tenkroode@gmail.com",
                     "--certificatesresolvers.letsencrypt.acme.storage=acme.json",
                     "--entryPoints.metrics.address=:8082",
+                    "--entryPoints.mqtt.address=:1883",
                     "--entryPoints.web.address=:80",
                     "--entryPoints.websecure.address=:443",
                     "--metrics.prometheus.entryPoint=metrics",
@@ -60,6 +61,10 @@ job "traefik" {
 
                     port "https" {
                         static = 443
+                    }
+
+                    port "mqtt" {
+                        static = 1883
                     }
 
                     port "prometheus" {

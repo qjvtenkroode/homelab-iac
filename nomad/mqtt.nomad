@@ -10,8 +10,13 @@ job "mqtt" {
 
         task "mosquitto" {
             driver = "docker"
+            
             config {
-                image = "eclipse-mosquitto:latest"
+                image = "eclipse-mosquitto:1.6"
+
+                port_map {
+                    mqtt = 1883
+                }
 
                 logging {
                     type = "splunk"
@@ -29,11 +34,26 @@ job "mqtt" {
                 memory = 128
 
                 network {
-                    mbits = 10
+                    port "mqtt" {}
+                }
+            }
 
-                    port "mqtt" {
-                        static = 1883
-                    }
+            service {
+                name = "mqtt"
+                port = "mqtt"
+                tags = [
+                    "traefik.enable=true",
+                    "treafik.frontend.entryPoints=mqtt",
+                    "traefik.tcp.routers.mqtt.entrypoints=mqtt",
+                    "traefik.tcp.routers.mqtt.rule=HostSNI(`*`)",
+                    "traefik.tcp.routers.mqtt.service=mqtt",
+                    "traefik.tcp.services.mqtt.loadbalancer.server.port=${NOMAD_HOST_PORT_mqtt}"
+                ]
+
+                check {
+                    type = "tcp"
+                    interval = "10s"
+                    timeout = "2s"
                 }
             }
 
@@ -50,17 +70,6 @@ EOF
 
             vault {
                 policies = ["homelab"]
-            }
- 
-            service {
-                name = "mqtt"
-                port = "mqtt"
-
-                check {
-                    type = "tcp"
-                    interval = "10s"
-                    timeout = "2s"
-                }
             }
         }
     }

@@ -58,20 +58,6 @@ job "bitwardenrs" {
                     port "websocket" { }
                 }
             }
-            template {
-                change_mode = "restart"
-                destination = "local/values.env"
-                env = true
-
-                data = <<EOF
-{{ with secret "secret/cribl/docker_hec" }}
-TOKEN = "{{ .Data.token }}"{{ end }}
-EOF
-            }
-
-            vault {
-                policies = ["homelab"]
-            }
 
             service {
                 name = "bitwardenrs"
@@ -108,6 +94,21 @@ EOF
                     interval = "10s"
                     timeout = "2s"
                 }
+            }
+
+            template {
+                change_mode = "restart"
+                destination = "local/values.env"
+                env = true
+
+                data = <<EOF
+{{ with secret "secret/cribl/docker_hec" }}
+TOKEN = "{{ .Data.token }}"{{ end }}
+EOF
+            }
+
+            vault {
+                policies = ["homelab"]
             }
         }
     }

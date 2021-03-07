@@ -37,6 +37,17 @@ job "registry" {
             }
         }
         
+        service {
+            name = "registry"
+            port = "registry"
+
+            check {
+                type = "tcp"
+                interval = "10s"
+                timeout = "2s"
+            }
+        }
+
         template {
             change_mode = "restart"
             destination = "local/values.env"
@@ -50,17 +61,6 @@ EOF
 
         vault {
             policies = ["homelab"]
-        }
-
-        service {
-            name = "registry"
-            port = "registry"
-
-            check {
-                type = "tcp"
-                interval = "10s"
-                timeout = "2s"
-            }
         }
     }
 }
