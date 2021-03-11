@@ -65,8 +65,8 @@ job "bitwardenrs" {
                 tags = [
                     "traefik.enable=true",
                     "traefik.frontend.entryPoints=http,https",
-                    "traefik.http.middlewares.redirect-https.redirectScheme.scheme=https",
-                    "traefik.http.middlewares.redirect-https.redirectScheme.permanent=true",
+                    "traefik.http.middlewares.redirect-https.redirectscheme.scheme=https",
+                    "traefik.http.middlewares.redirect-https.redirectscheme.permanent=true",
                     "traefik.http.routers.bitwarden-ui-https.rule=Host(`warden.qkroode.nl`)",
                     "traefik.http.routers.bitwarden-ui-https.entrypoints=websecure",
                     "traefik.http.routers.bitwarden-ui-https.tls=true",

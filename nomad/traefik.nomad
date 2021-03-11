@@ -52,7 +52,9 @@ job "traefik" {
 
             resources {
                 cpu = 500
-                memory = 512 network {
+                memory = 512 
+
+                network {
                     mbits = 10
 
                     port "http" {

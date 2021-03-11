@@ -43,9 +43,9 @@ job "qkroode.nl" {
                 port = "http"
                 tags = [
                     "traefik.enable=true",
-                    "treafik.frontend.entryPoints=http,https",
-                    "treafik.http.middlewares.redirect-https.redirectScheme.scheme=http",
-                    "treafik.http.middlewares.redirect-https.redirectScheme.permanent=true",
+                    "traefik.frontend.entryPoints=http,https",
+                    "traefik.http.middlewares.redirect-https.redirectScheme.scheme=http",
+                    "traefik.http.middlewares.redirect-https.redirectScheme.permanent=true",
                     "traefik.http.routers.qkroode-nl-https.rule=Host(`qkroode.nl`)",
                     "traefik.http.routers.qkroode-nl-https.entrypoints=websecure",
                     "traefik.http.routers.qkroode-nl-https.tls=true",

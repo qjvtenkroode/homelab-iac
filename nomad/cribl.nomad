@@ -12,7 +12,7 @@ job "cribl" {
             driver = "docker"
 
             config {
-                image = "registry.service.consul:5000/homelab/cribl:2.4.2-295252e"
+                image = "registry.service.consul:5000/homelab/cribl:2.4.2-a0ecf84"
             }
 
             resources {
